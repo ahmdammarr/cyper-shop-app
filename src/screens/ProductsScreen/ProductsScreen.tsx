@@ -1,53 +1,101 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { View } from '../../components/Themed';
-import { useAppSelector} from 'store'
-import {ProductsStateEnum} from 'store/products/types'
-import {selectProducts,selectStatus} from 'store/products'
-import { RootTabScreenProps } from '../../../types';
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  ListRenderItemInfo,
+  Dimensions
+} from 'react-native';
+import { View } from 'components/Themed';
+import { useAppSelector } from 'store';
+import {
+  ProductsStateEnum,
+  Product
+} from 'store/products/types';
+import {
+  selectProducts,
+  selectStatus
+} from 'store/products';
 import { Loader } from 'components/Loader';
 import { ProductCard } from 'components/ProductsCard';
 
+const { height, width } = Dimensions.get('screen');
 export function ProductsScreen () {
-  const products = useAppSelector(selectProducts)
-  const status = useAppSelector(selectStatus)
-  const [_ProductsState, setProductsState] = React.useState<ProductsStateEnum>(
-    'loading'
-  )
+  const products = useAppSelector(selectProducts);
+  const status = useAppSelector(selectStatus);
+  const [_ProductsState, setProductsState] = React.useState<
+    ProductsStateEnum
+  >('loading');
   React.useEffect(() => {
     if (status === 'loading') {
-      setProductsState('loading')
+      setProductsState('loading');
     } else if (status === 'failed') {
-      setProductsState('failed')
+      setProductsState('failed');
     } else {
-      setProductsState('done')
+      setProductsState('done');
     }
-  }, [status])
+  }, [status]);
+  console.log('status', status);
+  const ProductsState: {
+    [key in ProductsStateEnum]: React.ReactElement;
+  } = {
+    loading: <Loader />,
+    failed: <Text>Error</Text>,
+    done: (
+      <>
+        <FlatList
+          data={products}
+          contentContainerStyle={{justifyContent:'center', alignItems:'center' }}
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          keyExtractor={({ id }) => id.toString()}
+          renderItem={({
+            item: product
+          }: ListRenderItemInfo<Product>) => {
+            const {
+              id,
+              title,
+              image,
+              description,
+              category,
+              price
+            } = product;
+            return (
+              <View
+                style={{
+                  paddingHorizontal:4,
+                  marginVertical:4,
+                  height: height / 2.5,
+                  width: width / 2.1
+                }}
+              >
+                <ProductCard
+                  id={id}
+                  title={title}
+                  image={image}
+                  description={description}
+                  category={category}
+                  price={price}
+                />
+              </View>
+            );
+          }}
+        />
+      </>
+    )
+  };
+
   return (
     <View style={styles.container}>
-      <ProductCard
-        title='hellosdsdsdsd'
-        image='https://picsum.photos/200'
-        description='fldvnksdvnksdvbnskvbsdfkvbsdsdsdsdsdsdsdsddssd'
-        category='Electronics'
-        price={120}
-      />
+      {ProductsState[_ProductsState]}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%'
+    // flex: 1,
+    // justifyContent: 'center',
+    //  width: '100%'
   }
 });

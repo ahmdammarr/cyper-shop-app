@@ -23,7 +23,8 @@ export const Loader = (
         source={loader}
         style={[styles.lottie, style]}
         autoPlay
-        speed={5}
+        speed={2}
+        duration={2000}
         loop
         resizeMode='contain'
       />

@@ -22,20 +22,22 @@ export const ProductCard = ({
     <View isSubView style={styles.container}>
       <Image
         source={{ uri: image }}
-        resizeMode='cover'
+        resizeMode='stretch'
         style={styles.productImage}
       />
       <RNView style={{ marginLeft: '3%' }}>
         <Text
           style={[
-            fontProps['headline'],
-            { marginVertical: '2%' }
+            fontProps['title'],
+            {
+              height:'20%',
+              marginVertical: '2%' }
           ]}
         >
           {useTruncateText(title||'', 10)}
         </Text>
         <Text style={fontProps['label']}>
-          {useTruncateText(description||'', 35)}
+          {useTruncateText(description||'', 25)}
         </Text>
         <RNView style={{ flexWrap: 'wrap' }}>
           <ProductCategory category={category} />
@@ -51,8 +53,7 @@ export const ProductCard = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: '40%',
-    width: '50%',
+     height: '100%',
     borderRadius: 20
   },
   productImage: {
