@@ -14,13 +14,23 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import {Products} from 'screens/Products';
+import {ProductsScreen} from 'screens/ProductsScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import {useAppDispatch} from 'store'
+import {getProducts} from 'store/products'
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    dispatch(getProducts());
+  //  dispatch(getCategories());
+  }, [dispatch]);
+
   return (
+
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
@@ -58,15 +68,15 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Products"
+      initialRouteName="ProductsScreen"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Products"
-        component={Products}
-        options={({ navigation }: RootTabScreenProps<'Products'>) => ({
-          title:'Products',
+        name='ProductsScreen'
+        component={ProductsScreen}
+        options={({ navigation }: RootTabScreenProps<'ProductsScreen'>) => ({
+          title:"Products",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable

@@ -1,14 +1,28 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-
-import { Text, View } from '../../components/Themed';
+import { View } from '../../components/Themed';
+import { useAppSelector} from 'store'
+import {ProductsStateEnum} from 'store/products/types'
+import {selectProducts,selectStatus} from 'store/products'
 import { RootTabScreenProps } from '../../../types';
 import { Loader } from 'components/Loader';
 import { ProductCard } from 'components/ProductsCard';
 
-export function Products ({
-  navigation
-}: RootTabScreenProps<'Products'>) {
+export function ProductsScreen () {
+  const products = useAppSelector(selectProducts)
+  const status = useAppSelector(selectStatus)
+  const [_ProductsState, setProductsState] = React.useState<ProductsStateEnum>(
+    'loading'
+  )
+  React.useEffect(() => {
+    if (status === 'loading') {
+      setProductsState('loading')
+    } else if (status === 'failed') {
+      setProductsState('failed')
+    } else {
+      setProductsState('done')
+    }
+  }, [status])
   return (
     <View style={styles.container}>
       <ProductCard
