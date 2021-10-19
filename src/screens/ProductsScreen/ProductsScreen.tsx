@@ -80,7 +80,7 @@ export function ProductsScreen () {
 }
 
 const styles = StyleSheet.create({
-  container:{marginTop:'4%'},
+  container:{paddingTop:'4%'},
   productContainer: {
     paddingHorizontal: 4,
     marginVertical: 4,

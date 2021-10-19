@@ -52,7 +52,9 @@ export const ProductCard = ({
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    borderRadius: 20
+    borderRadius: 20,
+    borderColor:'#6c757d',
+    borderWidth:1
   },
   productImage: {
     width: '100%',
