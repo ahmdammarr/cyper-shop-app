@@ -42,60 +42,53 @@ export function ProductsScreen () {
     loading: <Loader />,
     failed: <Text>Error</Text>,
     done: (
-      <>
-        <FlatList
-          data={products}
-          contentContainerStyle={{justifyContent:'center', alignItems:'center' }}
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          keyExtractor={({ id }) => id.toString()}
-          renderItem={({
-            item: product
-          }: ListRenderItemInfo<Product>) => {
-            const {
-              id,
-              title,
-              image,
-              description,
-              category,
-              price
-            } = product;
-            return (
-              <View
-                style={{
-                  paddingHorizontal:4,
-                  marginVertical:4,
-                  height: height / 2.5,
-                  width: width / 2.1
-                }}
-              >
-                <ProductCard
-                  id={id}
-                  title={title}
-                  image={image}
-                  description={description}
-                  category={category}
-                  price={price}
-                />
-              </View>
-            );
-          }}
-        />
-      </>
+      <FlatList
+        data={products}
+        contentContainerStyle={styles.producsListContainer}
+        showsVerticalScrollIndicator={false}
+        numColumns={2}
+        keyExtractor={({ id }) => id.toString()}
+        renderItem={({
+          item: product
+        }: ListRenderItemInfo<Product>) => {
+          const {
+            id,
+            title,
+            image,
+            description,
+            category,
+            price
+          } = product;
+          return (
+            <View style={styles.productContainer}>
+              <ProductCard
+                id={id}
+                title={title}
+                image={image}
+                description={description}
+                category={category}
+                price={price}
+              />
+            </View>
+          );
+        }}
+      />
     )
   };
 
-  return (
-    <View style={styles.container}>
-      {ProductsState[_ProductsState]}
-    </View>
-  );
+  return <View style={styles.container}>{ProductsState[_ProductsState]}</View>;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // justifyContent: 'center',
-    //  width: '100%'
+  container:{marginTop:'4%'},
+  productContainer: {
+    paddingHorizontal: 4,
+    marginVertical: 4,
+    height: height / 2.5,
+    width: width / 2.1
+  },
+  producsListContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });

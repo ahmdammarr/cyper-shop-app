@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import { Product } from 'store/products/types';
 import { View, Text } from 'components/Themed';
-import { url } from 'inspector';
 import { fontProps } from 'constants/FontProps';
 import { ProductCategory } from './ProductCategory';
 import { useTruncateText } from 'hooks/useTruncateText';
@@ -25,27 +24,26 @@ export const ProductCard = ({
         resizeMode='stretch'
         style={styles.productImage}
       />
-      <RNView style={{ marginLeft: '3%' }}>
+      <RNView style={styles.cardInfoContainer}>
         <Text
           style={[
             fontProps['title'],
-            {
-              height:'20%',
-              marginVertical: '2%' }
+            styles.titleContainer
           ]}
         >
-          {useTruncateText(title||'', 10)}
+          {useTruncateText(title || '', 10)}
         </Text>
         <Text style={fontProps['label']}>
-          {useTruncateText(description||'', 25)}
+          {useTruncateText(description || '', 25)}
         </Text>
-        <RNView style={{ flexWrap: 'wrap' }}>
+        <RNView style={styles.categoryContainer}>
           <ProductCategory category={category} />
         </RNView>
-        <Text style={[
-            fontProps['title'],
-            { marginVertical: '4%' }
-          ]}>{price} EGP</Text>
+        <Text
+          style={[fontProps['title'], styles.priceText]}
+        >
+          {price} EGP
+        </Text>
       </RNView>
     </View>
   );
@@ -53,7 +51,7 @@ export const ProductCard = ({
 
 const styles = StyleSheet.create({
   container: {
-     height: '100%',
+    height: '100%',
     borderRadius: 20
   },
   productImage: {
@@ -61,5 +59,12 @@ const styles = StyleSheet.create({
     height: '40%',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20
-  }
+  },
+  cardInfoContainer: { marginLeft: '3%' },
+  titleContainer: {
+    height: '20%',
+    marginVertical: '2%'
+  },
+  categoryContainer: { flexWrap: 'wrap' },
+  priceText: { marginVertical: '4%' }
 });
