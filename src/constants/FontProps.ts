@@ -1,4 +1,5 @@
-export const fontProps = {
+import { StyleProp, TextStyle } from 'react-native';
+export const fontProps:{[key:string]:StyleProp<Pick<TextStyle,'fontSize'|'fontWeight'>>} = {
   headline: {
     fontSize: 30,
     fontWeight: '800'

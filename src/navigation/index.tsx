@@ -20,13 +20,14 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../
 import LinkingConfiguration from './LinkingConfiguration';
 import {useAppDispatch} from 'store'
 import {getProducts} from 'store/products'
-
+import { CategoryDropDown } from 'components/CategoryDropDown/CategoryDropDown';
+import {getCategories} from 'store/categories/categoriesSlice'
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     dispatch(getProducts());
-  //  dispatch(getCategories());
+    dispatch(getCategories());
   }, [dispatch]);
 
   return (
@@ -75,31 +76,37 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name='ProductsScreen'
         component={ProductsScreen}
-        options={({ navigation }: RootTabScreenProps<'ProductsScreen'>) => ({
-          title:"Products",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
+        //  options={
+        //    ()=>(_)
+        //  }
+        options={{
+          header:()=><CategoryDropDown/>
+        }}
+      //   options={({ navigation }: RootTabScreenProps<'ProductsScreen'>) => ({
+      //     title:"Products", 
+      //  //   tabBarIcon: ({ color }) => <TabBarIcon name="amazon" color={color} />,
+      //     // headerRight: () => (
+      //     //   <Pressable
+      //     //     onPress={() => navigation.navigate('Modal')}
+      //     //     style={({ pressed }) => ({
+      //     //       opacity: pressed ? 0.5 : 1,
+      //     //     })}>
+      //     //     <FontAwesome
+      //     //       name="info-circle"
+      //     //       size={25}
+      //     //       color={Colors[colorScheme].text}
+      //     //       style={{ marginRight: 15 }}
+      //     //     />
+      //     //   </Pressable>
+      //     // ),
+      //   })}
       />
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
         options={{
           title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="shopping-basket" color={color} />,
         }}
       />
     </BottomTab.Navigator>

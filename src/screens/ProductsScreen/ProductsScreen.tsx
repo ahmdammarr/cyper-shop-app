@@ -18,6 +18,7 @@ import {
 } from 'store/products';
 import { Loader } from 'components/Loader';
 import { ProductCard } from 'components/ProductsCard';
+import { CategoryDropDown } from 'components/CategoryDropDown/CategoryDropDown';
 
 const { height, width } = Dimensions.get('screen');
 export function ProductsScreen () {
@@ -42,6 +43,7 @@ export function ProductsScreen () {
     loading: <Loader />,
     failed: <Text>Error</Text>,
     done: (
+      <>
       <FlatList
         data={products}
         contentContainerStyle={styles.producsListContainer}
@@ -73,6 +75,7 @@ export function ProductsScreen () {
           );
         }}
       />
+      </>
     )
   };
 
